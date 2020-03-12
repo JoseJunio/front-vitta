@@ -1,0 +1,79 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item active" aria-current="page">Gerenciamento dos usuários</li>
+    </ol>
+  </nav>
+  <div class="container" style="max-width: 100%;">
+    <div class="card list-usuario">
+      <h5 class="card-header">Lista dos usuários</h5>
+      <div class="card-body">
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Nome</th>
+                <th scope="col">Data de Nascimento</th>
+                <th scope="col">CPF</th>
+                <th scope="col">RG</th>
+                <th scope="col">Endereço</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let usuario of usuarios">
+                <td>{{usuario.id}}</td>
+                <td>{{usuario.nome}}</td>
+                <td>{{usuario.dataNascimento}}</td>
+                <td>{{usuario.cpf}}</td>
+                <td>{{usuario.rg}}</td>
+                <td>{{usuario.endereco}}</td>
+                <td>
+                  <button type="button" class="btn btn-danger btn-sm ml-1" (click)="deleteUsuario(usuario)">Deletar</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+      </div>
+    </div>
+  
+    <div class="card add-usuario">
+        <h5 class="card-header">Adicionar/Atualizar usuário</h5>
+        <div class="card-body">
+            <form id="add-form" (ngSubmit)="f.form.valid && saveUsuario(f)" #f="ngForm" novalidate>
+              <div class="form-group">
+                <label for="model">Nome</label>
+                <input type="text" [(ngModel)]="usuario.nome" id="model" name="model" #model="ngModel" required class="form-control" [ngClass]="{ 'is-invalid': f.submitted && model.invalid }">
+                <div *ngIf="f.submitted && model.invalid" class="invalid-feedback">
+                    <div *ngIf="model.errors.required">Nome é obrigatório</div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="model">CPF</label>
+                <input type="text" [(ngModel)]="usuario.cpf" id="model" name="model" #model="ngModel" required class="form-control" [ngClass]="{ 'is-invalid': f.submitted && model.invalid }">
+                <div *ngIf="f.submitted && model.invalid" class="invalid-feedback">
+                    <div *ngIf="model.errors.required">CPF é obrigatório</div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="model">RG</label>
+                <input type="text" [(ngModel)]="usuario.rg" id="model" name="model" #model="ngModel" required class="form-control" [ngClass]="{ 'is-invalid': f.submitted && model.invalid }">
+                <div *ngIf="f.submitted && model.invalid" class="invalid-feedback">
+                    <div *ngIf="model.errors.required">RG é obrigatório</div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="model">Data de Nascimento</label>
+                <input type="text" [(ngModel)]="usuario.dataNascimento" id="model" name="model" #model="ngModel" required class="form-control" [ngClass]="{ 'is-invalid': f.submitted && model.invalid }">
+                <div *ngIf="f.submitted && model.invalid" class="invalid-feedback">
+                    <div *ngIf="model.errors.required">Nome é obrigatório</div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="model">Endereço</label>
+                <input type="text" [(ngModel)]="usuario.endereco" id="model" name="model" #model="ngModel" required class="form-control" [ngClass]="{ 'is-invalid': f.submitted && model.invalid }">
+              </div>
+              <button type="submit" class="btn btn-primary btn-add-usuario">Salvar</button>
+              <button type="reset" class="btn btn-secondary btn-add-usuario" (click)="cleanForm(f)">Cancelar</button>
+            </form>
+        </div>
+      </div>
+  </div>

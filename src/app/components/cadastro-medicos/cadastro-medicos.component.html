@@ -1,0 +1,96 @@
+<!--<p>cadastro-medicos works!</p>-->
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item active" aria-current="page">Gerenciamento dos médicos</li>
+    </ol>
+  </nav>
+  <div class="container" style="max-width: 100%;">
+    <div class="card list-medico">
+      <h5 class="card-header">Lista de médicos</h5>
+      <div class="card-body">
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Nome</th>
+                <th scope="col">CRM</th>
+                <th scope="col">CPF</th>
+                <th scope="col">RG</th>
+                <th scope="col">Área de Atuação</th>
+                <th scope="col">Data de Nascimento</th>
+                <th scope="col">Endereço</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let medico of medicos">
+                <td>{{medico.id}}</td>
+                <td>{{medico.nome}}</td>
+                <td>{{medico.crm}}</td>
+                <td>{{medico.cpf}}</td>
+                <td>{{medico.rg}}</td>
+                <td>{{medico.areaAtuacao}}</td>
+                <td>{{medico.dataNascimento}}</td>
+                <td>{{medico.endereco}}</td>
+                <td>
+                  <button type="button" class="btn btn-danger btn-sm ml-1" (click)="deleteMedico(medico)">Deletar</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+      </div>
+    </div>
+  
+    <div class="card add-medico">
+        <h5 class="card-header">Adicionar/Atualizar usuário</h5>
+        <div class="card-body">
+            <form id="add-form" (ngSubmit)="f.form.valid && saveMedico(f)" #f="ngForm" novalidate>
+              <div class="form-group">
+                <label for="model">Nome</label>
+                <input type="text" [(ngModel)]="medico.nome" id="model" name="model" #model="ngModel" required class="form-control" [ngClass]="{ 'is-invalid': f.submitted && model.invalid }">
+                <div *ngIf="f.submitted && model.invalid" class="invalid-feedback">
+                    <div *ngIf="model.errors.required">Nome é obrigatório</div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="model">CRM</label>
+                <input type="text" [(ngModel)]="medico.crm" id="model" name="model" #model="ngModel" required class="form-control" [ngClass]="{ 'is-invalid': f.submitted && model.invalid }">
+                <div *ngIf="f.submitted && model.invalid" class="invalid-feedback">
+                    <div *ngIf="model.errors.required">CRM é obrigatório</div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="model">CPF</label>
+                <input type="text" [(ngModel)]="medico.cpf" id="model" name="model" #model="ngModel" required class="form-control" [ngClass]="{ 'is-invalid': f.submitted && model.invalid }">
+                <div *ngIf="f.submitted && model.invalid" class="invalid-feedback">
+                    <div *ngIf="model.errors.required">CPF é obrigatório</div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="model">RG</label>
+                <input type="text" [(ngModel)]="medico.rg" id="model" name="model" #model="ngModel" required class="form-control" [ngClass]="{ 'is-invalid': f.submitted && model.invalid }">
+                <div *ngIf="f.submitted && model.invalid" class="invalid-feedback">
+                    <div *ngIf="model.errors.required">RG é obrigatório</div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="model">Área de atuação</label>
+                <input type="text" [(ngModel)]="medico.areaAtuacao" id="model" name="model" #model="ngModel" required class="form-control" [ngClass]="{ 'is-invalid': f.submitted && model.invalid }">
+              </div>
+              <div class="form-group">
+                <label for="model">Data de Nascimento</label>
+                <input type="text" [(ngModel)]="medico.dataNascimento" id="model" name="model" #model="ngModel" required class="form-control" [ngClass]="{ 'is-invalid': f.submitted && model.invalid }">
+                <div *ngIf="f.submitted && model.invalid" class="invalid-feedback">
+                    <div *ngIf="model.errors.required">Nome é obrigatório</div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="model">Endereço</label>
+                <input type="text" [(ngModel)]="medico.endereco" id="model" name="model" #model="ngModel" required class="form-control" [ngClass]="{ 'is-invalid': f.submitted && model.invalid }">
+              </div>
+              <button type="submit" class="btn btn-primary btn-add-medico">Salvar</button>
+              <button type="reset" class="btn btn-secondary btn-add-medico" (click)="cleanForm(f)">Cancelar</button>
+            </form>
+        </div>
+      </div>
+  </div>

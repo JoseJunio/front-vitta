@@ -1,0 +1,92 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item active" aria-current="page">Gerenciamento das prescrições</li>
+    </ol>
+  </nav>
+  <div class="container" style="max-width: 100%;">
+    <div class="card list-prescricao">
+      <h5 class="card-header">Lista de prescrições</h5>
+      <div class="card-body">
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Usuário</th>
+                <th scope="col">Médico</th>
+                <th scope="col">Farmacos</th>
+                <th scope="col">Data</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let presc of prescricao">
+                <td>{{presc.id}}</td>
+                <td>{{presc.usuario}}</td>
+                <td>{{presc.medico}}</td>
+                <td>{{presc.farmacos}}</td>
+                <td>{{presc.data}}</td>
+                <td>
+                  <button type="button" class="btn btn-danger btn-sm ml-1" (click)="deletePrescricao(presc)">Deletar</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+      </div>
+    </div>
+  
+    <div class="card add-prescricao">
+        <h5 class="card-header">Adicionar prescrição médica</h5>
+        <div class="card-body">
+            <form id="add-form" (ngSubmit)="f.form.valid && savePrescricao()" #f="ngForm" novalidate>
+              <div style="display: flex" class="form-group">
+                <div style="flex: 1;">
+                    <label for="model">Usuário:</label>
+                    <select [ngModelOptions]="{standalone: true}" [(ngModel)]="selectedUser" style="margin: 10px; width: 150px;">
+                        <option value="0">--Todos--</option>
+                        <option *ngFor="let usuario of usuarios">
+                            {{usuario.nome}}
+                            </option>
+                    </select>
+                </div>
+                <div style="flex: 1;">
+                    <label for="model">Médico:</label>
+                    <select [ngModelOptions]="{standalone: true}" [(ngModel)]="selectedMedico" style="margin: 10px; width: 150px;">
+                        <option value="0">--Todos--</option>
+                        <option *ngFor="let medico of medicos" >
+                            {{medico.nome}}
+                          </option>
+                    </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="model">Quantidade de remédios?</label>
+                <input type="number" max="5" (change)="criarPrescricoes(qtdRemedios)" [(ngModel)]="qtdRemedios" id="model" name="model" #model="ngModel" required class="form-control" [ngClass]="{ 'is-invalid': f.submitted && model.invalid }">
+              </div>
+
+              <div *ngIf="qtdRemedios != 0">
+                  <section *ngFor="let prescricao of prescricoes; let i = index" style="display: flex" class="form-group">
+                      <div style="flex: 1;">
+                          <label>Medicamentos:</label>
+                          <select style="margin: 10px; width: 150px;" (change)="setFarmacos(prescricao, $event.target.value)">
+                              <option >--Todos--</option>
+                              <option *ngFor="let medicamento of medicamentos; let i = index" [value]="medicamento.Farmacos">
+                                  {{medicamento.Nome}}
+                              </option>
+                          </select>
+                      </div>
+                      <div style="flex: 1; margin: 10px; width: 150px;">
+                          <label>Posologia:</label>
+                          <input  style=" margin-left: 10px;" type="text" [(ngModel)]="prescricao.posologia" [ngModelOptions]="{standalone: true}">
+                      </div>
+                      <div style="flex: 1; margin: 10px; width: 150px;">
+                          <label>Via de administração: </label>
+                          <input  style=" margin-left: 10px;" type="text" [(ngModel)]="prescricao.viaAdministracao" [ngModelOptions]="{standalone: true}">
+                      </div>
+                  </section>
+              </div>
+              <button type="submit" class="btn btn-primary btn-add-prescricao">Salvar</button>
+              <button type="reset" class="btn btn-secondary btn-add-prescricao" (click)="cleanForm(f)">Cancelar</button>
+            </form>
+        </div>
+      </div>
+  </div>
